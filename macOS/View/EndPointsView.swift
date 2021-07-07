@@ -56,6 +56,7 @@ struct EndPointRowView: View {
                         .padding()
                         .onDisappear() {
                             print("endpoint popover on disapper")
+                            NodeListViewModel.shared.refresh()
                             saveClashConfigToNewConfig()
                         }
                 }
@@ -70,6 +71,7 @@ struct EndPointsView: View {
     @State var selectItems: Set<EndPointViewModel> = []
     @State var showingAddEndPoint: Bool = false
     @State var showingDeleteEndPoint: Bool = false
+    @State var showingAlert: Bool = false
     @StateObject var listViewModel: EndPointListViewModel = EndPointListViewModel.shared
     @StateObject var favoriteListViewModel: FavoriteListViewModel = FavoriteListViewModel.shared
 
@@ -96,6 +98,7 @@ struct EndPointsView: View {
                     }
                     print("delete!")
                     selectItems.removeAll()
+                    NodeListViewModel.shared.refresh()
                     listViewModel.objectWillChange.send()
                     saveClashConfigToNewConfig()
                   }),
@@ -122,10 +125,24 @@ struct EndPointsView: View {
             }
             ToolbarItem {
                 Button {
-                    showingDeleteEndPoint = true
+                    var isUsing = false
+                    for item in selectItems {
+                        if RuleListViewModel.shared.isUsing(endpointName: item.name) {
+                            isUsing = true
+                        }
+                    }
+                    if isUsing {
+                        showingAlert = true
+                    } else {
+                        showingDeleteEndPoint = true
+                    }
                 } label: {
                     Image(systemName: "trash")
                         .foregroundColor(selectItems.count >= 1 ? .red : .gray)
+                }
+                .alert(isPresented: $showingAlert) {
+                    Alert(title: Text("Can not delete! \nSome endpoints are using by rule."),
+                          dismissButton: .default(Text("Got it")))
                 }
                 .keyboardShortcut(.delete, modifiers: [])
                 .disabled(selectItems.isEmpty)

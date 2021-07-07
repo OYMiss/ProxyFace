@@ -28,6 +28,7 @@ struct ProxyRowView: View {
                     .padding()
                     .onDisappear() {
                         print("on disapper")
+                        NodeListViewModel.shared.refresh()
                         saveClashConfigToNewConfig()
                     }
             }
@@ -67,6 +68,7 @@ struct ProxiesView: View {
                     }
                     print("delete!")
                     selectItems.removeAll()
+                    NodeListViewModel.shared.refresh()
                     saveClashConfigToNewConfig()
                   }),
                   secondaryButton: .cancel({})

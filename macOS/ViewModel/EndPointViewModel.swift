@@ -60,10 +60,20 @@ func toEndPointViewModel(items: [EndPointItem]) -> [EndPointViewModel] {
 
 class EndPointListViewModel: ObservableObject {
     var cancellable: AnyCancellable?
-
+    
     @Published var items: [EndPointViewModel]
     
     static var shared = EndPointListViewModel()
+    
+    func cleanDeleteProxy() {
+        for item in items {
+            item.nodes.removeAll { proxyName in
+                return !NodeListViewModel.shared.items.contains(where: { nodeViewModel in
+                    nodeViewModel.name == proxyName
+                })
+            }
+        }
+    }
     
     func loadConfig(config: ClashConfig) {
         items.removeAll()

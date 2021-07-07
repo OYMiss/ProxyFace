@@ -77,6 +77,27 @@ class RuleListViewModel: ObservableObject {
         }
     }
     
+    func isUsing(endpointName: String) -> Bool {
+        for ruleViewItem in RuleListViewModel.shared.items {
+            if ruleViewItem.endpoint == endpointName {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func fixErrorRule() {
+        for ruleViewItem in RuleListViewModel.shared.items {
+            if ruleViewItem.endpoint != "DIRECT" || ruleViewItem.endpoint != "REJECT" {
+                if !NodeListViewModel.shared.endpointViewItems.contains(where: { node in
+                    node.name == ruleViewItem.endpoint
+                }) {
+                    ruleViewItem.endpoint = "DIRECT"
+                }
+            }
+        }
+    }
+    
     private init() {
         self.items = []
     }
