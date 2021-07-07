@@ -8,6 +8,5 @@ Another GUI App of [Clash](https://github.com/Dreamacro/clash) for macOS.
 ### Note
 
 1. Only `trojan` and `shadowsocks(plain)` is supported
-2. Default socks and http port is `8899`
-3. System proxy is not supported
-4. Config will not apply until you tap `save and restart` button in setting tab.
+2. Default socks port is `8889` and http port is `8888`, and system proxy will be set when the app is launched.
+3. Config(except the Picker of endpoint) will not apply until you tap `save and restart` button in setting tab.

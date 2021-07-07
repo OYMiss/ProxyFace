@@ -148,6 +148,7 @@ func loadClashConfig() {
                 EndPointListViewModel.shared.loadConfig(config: clashConfig)
                 ProxyListViewModel.shared.loadConfig(config: clashConfig)
                 RuleListViewModel.shared.loadConfig(config: clashConfig)
+                EnableSystemProxy(httpPort: String(clashConfig.port), socksPort: String(clashConfig.socksPort))
             }
         }
     } catch {
@@ -299,5 +300,31 @@ func StopClash() {
         NSLog("Stop clash succeeded.")
     } else {
         NSLog("Stop clash failed.")
+    }
+}
+
+func EnableSystemProxy(httpPort: String, socksPort: String) {
+    print("enable system proxy")
+    let bundle = Bundle.main
+    let bashPath = bundle.path(forResource: "configure_proxy.sh", ofType: nil)
+    let task = Process.launchedProcess(launchPath: bashPath!, arguments: ["on", httpPort, socksPort])
+    task.waitUntilExit()
+    if task.terminationStatus == 0 {
+        NSLog("enable system proxy succeeded.")
+    } else {
+        NSLog("enable system proxy failed.")
+    }
+}
+
+func DisableSystemProxy() {
+    print("disable system proxy")
+    let bundle = Bundle.main
+    let bashPath = bundle.path(forResource: "configure_proxy.sh", ofType: nil)
+    let task = Process.launchedProcess(launchPath: bashPath!, arguments: ["off"])
+    task.waitUntilExit()
+    if task.terminationStatus == 0 {
+        NSLog("disable system proxy succeeded.")
+    } else {
+        NSLog("disable system proxy failed.")
     }
 }

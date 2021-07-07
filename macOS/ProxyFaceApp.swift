@@ -43,6 +43,7 @@ struct ProxyFaceApp: App {
         NotificationCenter.default.addObserver(forName: NSApplication.willTerminateNotification, object: nil, queue: .main) { _ in
             // terminating
             print("closing app")
+            DisableSystemProxy()
             StopClash()
             print("closed")
         }
