@@ -26,6 +26,7 @@
 		3C6EC0D02688A84F00059644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EC0B62688A84F00059644 /* Assets.xcassets */; };
 		3C6EC0DA2688A8BB00059644 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EC0D92688A8BB00059644 /* SidebarView.swift */; };
 		3C6EC0DC2688A97E00059644 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EC0DB2688A97E00059644 /* HomeView.swift */; };
+		3C76845A269715B100445890 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C768459269715B100445890 /* HomeViewModel.swift */; };
 		3C816CE32695708000A960BE /* configure_proxy.sh in Resources */ = {isa = PBXBuildFile; fileRef = 3C816CE22695707F00A960BE /* configure_proxy.sh */; };
 		3C8AC4A5268DA15000CA8457 /* EndPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8AC4A4268DA15000CA8457 /* EndPointsView.swift */; };
 		3C8AC4A7268DA86E00CA8457 /* RuleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8AC4A6268DA86E00CA8457 /* RuleDetailView.swift */; };
@@ -62,6 +63,7 @@
 		3C6EC0C62688A84F00059644 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		3C6EC0D92688A8BB00059644 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		3C6EC0DB2688A97E00059644 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		3C768459269715B100445890 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		3C816CE22695707F00A960BE /* configure_proxy.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = configure_proxy.sh; sourceTree = "<group>"; };
 		3C8AC4A4268DA15000CA8457 /* EndPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointsView.swift; sourceTree = "<group>"; };
 		3C8AC4A6268DA86E00CA8457 /* RuleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleDetailView.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				3C985719268DC88A001653FC /* EndPointViewModel.swift */,
 				3C1148D9268EAD9800C16728 /* NodeViewModel.swift */,
 				3C2146B9268F302D00B04F19 /* FavoriteViewModel.swift */,
+				3C768459269715B100445890 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C2146BA268F302D00B04F19 /* FavoriteViewModel.swift in Sources */,
+				3C76845A269715B100445890 /* HomeViewModel.swift in Sources */,
 				3C4969E02689894800F37499 /* ProxiesView.swift in Sources */,
 				3CD1BFC3268C8D17000C60AA /* AddProxyView.swift in Sources */,
 				3C1621CB2692F17C005414EC /* SettingView.swift in Sources */,
@@ -401,6 +405,7 @@
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -423,6 +428,7 @@
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

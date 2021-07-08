@@ -13,7 +13,8 @@ struct HomeView: View {
     }
     
     @StateObject var listViewModel: FavoriteListViewModel = FavoriteListViewModel.shared
-
+    @StateObject var homeViewModel: HomeViewModel = HomeViewModel.shared
+    
     // Test!!
     @State private var selectedProxy = 2
     @State var selectedItems: Set<EndPointViewModel> = []
@@ -21,7 +22,8 @@ struct HomeView: View {
     var body: some View {
         List(selection: $selectedItems) {
             HStack {
-                Text("Connect").foregroundColor(.blue)
+                Text(homeViewModel.clashStatus)
+                    .foregroundColor(homeViewModel.clashStatus == "Running Error" ? .red : .blue)
             }
             
             Divider()
@@ -68,6 +70,8 @@ struct HomeView: View {
                     Image(systemName: "heart.slash")
                 })
             }
+        }.onAppear() {
+            homeViewModel.fetchClashStatus()
         }
     }
 }
