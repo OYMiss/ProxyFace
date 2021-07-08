@@ -8,8 +8,8 @@
 import Foundation
 import Yams
 
-struct S: Codable {
-    var p: [String]
+struct UserConfig: Codable {
+    var favoriteEndpoints: [String]?
 }
 
 struct ProxyConfig: Codable {
@@ -89,20 +89,26 @@ struct ConfigManager {
     
     var clashConfigStr: String? = nil
     var clashConfig: ClashConfig? = nil
+    var userConfig: UserConfig? = nil
     
     let home = FileManager.default.homeDirectoryForCurrentUser
     let clashFilePath: String
     let clashNewFilePath: String
+    let userConfigFilePath: String
     let clashFileUrl: URL
     let clashNewFileUrl: URL
     let clashLaunchAgentUrl: URL
+    let userConfigUrl: URL
     
     private init() {
         clashNewFilePath = "/Library/Application Support/io.github.oymiss.ProxyFace/clash/config_bak.yaml"
         clashFilePath = "/Library/Application Support/io.github.oymiss.ProxyFace/clash/config.yaml"
+        userConfigFilePath = "/Library/Application Support/io.github.oymiss.ProxyFace/clash/user_config.yaml"
+
         clashNewFileUrl = home.appendingPathComponent(clashNewFilePath)
         clashFileUrl = home.appendingPathComponent(clashFilePath)
         clashLaunchAgentUrl = home.appendingPathComponent("/Library/LaunchAgents/io.github.oymiss.ProxyFace.clash.plist")
+        userConfigUrl = home.appendingPathComponent(userConfigFilePath)
     }
 }
 
@@ -153,6 +159,57 @@ func loadClashConfig() {
         }
     } catch {
         print("\(error)")
+    }
+}
+
+func loadUserConfig() {
+    do {
+        let fileManager = FileManager.default
+
+        print("user config exist: \(fileManager.fileExists(atPath: ConfigManager.config.userConfigUrl.path)), \(ConfigManager.config.userConfigUrl.path)")
+        if fileManager.fileExists(atPath: ConfigManager.config.userConfigUrl.path) {
+            let data = fileManager.contents(atPath: ConfigManager.config.userConfigUrl.path)
+            if data != nil {
+                // Read
+                let str = String(data: data!, encoding: .utf8)
+                
+                // Decode
+                let decoder = YAMLDecoder()
+                let userConfig = try decoder.decode(UserConfig.self, from: str!)
+                ConfigManager.config.userConfig = userConfig
+                FavoriteListViewModel.shared.loadConfig(config: userConfig)
+            }
+        }
+    } catch {
+        print("\(error)")
+    }
+}
+
+func saveUserConfig() {
+    let fileManager = FileManager.default
+
+    do {
+        try fileManager.removeItem(at: ConfigManager.config.userConfigUrl)
+    } catch {
+        print("error at remove \(error)")
+    }
+    
+    do {
+        if FavoriteListViewModel.shared.endpointViewItems.count > 0 {
+            var userConfig = UserConfig()
+            userConfig.favoriteEndpoints = []
+            for item in FavoriteListViewModel.shared.endpointViewItems {
+                userConfig.favoriteEndpoints?.append(item.name)
+            }
+            // Encode
+            let encoder = YAMLEncoder()
+            let encodedYAML = try encoder.encode(userConfig)
+            let encodedCN = encodedYAML.utf8DecodedString()
+            let newData = encodedCN.data(using: .utf8)
+            fileManager.createFile(atPath: ConfigManager.config.userConfigUrl.path, contents: newData)
+        }
+    } catch {
+        print("error at create \(error)")
     }
 }
 

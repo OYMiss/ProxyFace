@@ -112,6 +112,7 @@ struct EndPointsView: View {
                     for item in selectItems {
                         if !favoriteListViewModel.endpointViewItems.contains(item) {
                             favoriteListViewModel.endpointViewItems.insert(item)
+                            saveUserConfig()
                         }
                     }
                     

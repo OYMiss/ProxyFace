@@ -52,4 +52,15 @@ class FavoriteListViewModel: ObservableObject {
         ruleViewItems = []
     }
     
+    func loadConfig(config: UserConfig) {
+        if config.favoriteEndpoints != nil {
+            for endpointViewModel in EndPointListViewModel.shared.items {
+                let isMark = config.favoriteEndpoints?.contains(endpointViewModel.name)
+                if isMark != nil && isMark! {
+                    self.endpointViewItems.insert(endpointViewModel)
+                }
+            }
+        }
+    }
+    
 }

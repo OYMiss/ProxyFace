@@ -50,6 +50,7 @@ struct ProxyFaceApp: App {
         
         print("starting")
         loadClashConfig()
+        loadUserConfig()
         StartClash()
         #endif
     }

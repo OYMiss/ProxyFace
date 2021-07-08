@@ -27,6 +27,7 @@
 		3C6EC0DA2688A8BB00059644 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EC0D92688A8BB00059644 /* SidebarView.swift */; };
 		3C6EC0DC2688A97E00059644 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EC0DB2688A97E00059644 /* HomeView.swift */; };
 		3C76845A269715B100445890 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C768459269715B100445890 /* HomeViewModel.swift */; };
+		3C76845C269727C800445890 /* user_config.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 3C76845B269727C800445890 /* user_config.yaml */; };
 		3C816CE32695708000A960BE /* configure_proxy.sh in Resources */ = {isa = PBXBuildFile; fileRef = 3C816CE22695707F00A960BE /* configure_proxy.sh */; };
 		3C8AC4A5268DA15000CA8457 /* EndPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8AC4A4268DA15000CA8457 /* EndPointsView.swift */; };
 		3C8AC4A7268DA86E00CA8457 /* RuleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8AC4A6268DA86E00CA8457 /* RuleDetailView.swift */; };
@@ -64,6 +65,7 @@
 		3C6EC0D92688A8BB00059644 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		3C6EC0DB2688A97E00059644 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3C768459269715B100445890 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		3C76845B269727C800445890 /* user_config.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = user_config.yaml; sourceTree = "<group>"; };
 		3C816CE22695707F00A960BE /* configure_proxy.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = configure_proxy.sh; sourceTree = "<group>"; };
 		3C8AC4A4268DA15000CA8457 /* EndPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointsView.swift; sourceTree = "<group>"; };
 		3C8AC4A6268DA86E00CA8457 /* RuleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleDetailView.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				3C1621902692E57A005414EC /* clash */,
 				3C1621582692E57A005414EC /* install.sh */,
 				3C1621592692E57A005414EC /* clean.sh */,
+				3C76845B269727C800445890 /* user_config.yaml */,
 			);
 			path = SupportFiles;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				3CBD04252690471700ED80BB /* stop_clash.sh in Resources */,
 				3C816CE32695708000A960BE /* configure_proxy.sh in Resources */,
 				3C1621932692E57A005414EC /* install.sh in Resources */,
+				3C76845C269727C800445890 /* user_config.yaml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

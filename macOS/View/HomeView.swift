@@ -66,6 +66,7 @@ struct HomeView: View {
                     for item in selectedItems {
                         listViewModel.endpointViewItems.remove(item)
                     }
+                    saveUserConfig()
                 }, label: {
                     Image(systemName: "heart.slash")
                 })
