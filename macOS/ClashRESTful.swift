@@ -41,7 +41,7 @@ func fetch(request: URLRequest) -> AnyPublisher<Data, APIError> {
 
 
 func changeEndPointTo(endPointName: String, proxyName: String) {
-    let url = URL(string: "http://127.0.0.1:6170/proxies/\(endPointName)")!
+    let url = URL(string: "http://127.0.0.1:6170/proxies/\(endPointName.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)")!
     var request = URLRequest(url: url)
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.httpMethod = "PUT"
