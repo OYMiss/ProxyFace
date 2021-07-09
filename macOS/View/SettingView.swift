@@ -8,14 +8,29 @@
 import SwiftUI
 
 struct SettingView: View {
+    @State var configPath = "~/Library/Application Support/io.github.oymiss.ProxyFace/clash"
+    @State var logPath = "~/Library/Logs/clash.log"
+
     var body: some View {
-        List {            
-            Button(action: {
-                StopClash()
-                StartClash()
-            }, label: {
-                Text("Restart Clash Core")
-            })
+        List {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Config Path").font(.footnote).foregroundColor(.secondary)
+                TextField("", text: .constant(configPath))
+            }
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Log Path").font(.footnote).foregroundColor(.secondary)
+                TextField("", text: .constant(logPath))
+            }
+        }.toolbar {
+            ToolbarItem {
+                Button(action: {
+                    StopClash()
+                    loadClashConfig()
+                    StartClash()
+                }, label: {
+                    Text("Restart")
+                })
+            }
         }
     }
 }

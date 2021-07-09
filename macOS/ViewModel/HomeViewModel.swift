@@ -15,6 +15,8 @@ struct ClashStatus: Codable {
 class HomeViewModel: Identifiable, Hashable, ObservableObject {
     var cancellable: AnyCancellable?
     @Published var clashStatus = "Stopped"
+    @Published var showNotRunningAlert = false
+    @Published var errorCnt = 0
     
     let id = UUID()
     static func == (lhs: HomeViewModel, rhs: HomeViewModel) -> Bool {
@@ -45,7 +47,21 @@ class HomeViewModel: Identifiable, Hashable, ObservableObject {
                 }
             .decode(type: ClashStatus.self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { print ("Received completion: \($0).") },
+            .sink(receiveCompletion: { complete in
+                if "\(complete)" != "finished" {
+                    self.errorCnt += 1
+                    if self.errorCnt >= 2 {
+                        self.showNotRunningAlert = true
+                        print("clash is not running, check your config!")
+                    } else {
+                        self.fetchClashStatus()
+                    }
+                } else {
+                    print("OK")
+                    self.showNotRunningAlert = false
+                    print ("Received completion: \(complete).")
+                }
+            },
                   receiveValue: { clashStatusEntity  in
                     self.clashStatus = "Running"
                     EndPointListViewModel.shared.fetchAllEndPointsStatus()

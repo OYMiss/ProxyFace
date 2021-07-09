@@ -24,6 +24,11 @@ struct HomeView: View {
             HStack {
                 Text(homeViewModel.clashStatus)
                     .foregroundColor(homeViewModel.clashStatus == "Running Error" ? .red : .blue)
+                    .alert(isPresented: $homeViewModel.showNotRunningAlert) {
+                        Alert(title: Text("Clash is not running"),
+                              message: Text("please check log and config."),
+                              dismissButton: .default(Text("OK")))
+                    }
             }
             
             Divider()
