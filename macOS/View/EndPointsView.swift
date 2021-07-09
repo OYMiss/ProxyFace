@@ -11,7 +11,8 @@ struct EndPointRowView: View {
     @ObservedObject var item: EndPointViewModel
     var isSelected: Bool = false
     @StateObject var nodeListViewModel: NodeListViewModel = NodeListViewModel.shared
-
+    @State var oldEndpointName = ""
+    
     var body: some View {
         HStack {
             Text(item.name)
@@ -30,23 +31,27 @@ struct EndPointRowView: View {
             Image(systemName: "info.circle").font(.title3).foregroundColor(isSelected ? .white : .blue)
 //                .visiableWhen(item.showingPopoverButton)
                 .onTapGesture {
+                    oldEndpointName = item.name
                     item.showingPopover = true
                     item.showingProxies = false
                     item.showingEndpoints = false
                     item.showingBuildinNodes = false
-                    
-                    for nodeViewModel in nodeListViewModel.items {
-                        nodeViewModel.checkedFlag = item.nodes.contains(nodeViewModel.name)
-                        if (nodeViewModel.checkedFlag) {
-                            if !item.showingProxies && nodeViewModel.type == "proxy" {
-                                item.showingProxies = true
-                            }
-                            if !item.showingEndpoints && nodeViewModel.type == "endpoint" {
-                                item.showingEndpoints = true
-                            }
-                            if !item.showingBuildinNodes && nodeViewModel.type == "buildin" {
-                                item.showingBuildinNodes = true
-                            }
+                    for viewModel in nodeListViewModel.buildinViewItems {
+                        viewModel.checkedFlag = item.nodes.contains(viewModel.name)
+                        if !item.showingBuildinNodes && viewModel.checkedFlag {
+                            item.showingBuildinNodes = true
+                        }
+                    }
+                    for viewModel in nodeListViewModel.endpointViewItems {
+                        viewModel.checkedFlag = item.nodes.contains(viewModel.name)
+                        if !item.showingEndpoints && viewModel.checkedFlag {
+                            item.showingEndpoints = true
+                        }
+                    }
+                    for viewModel in nodeListViewModel.proxyViewItems {
+                        viewModel.checkedFlag = item.nodes.contains(viewModel.name)
+                        if !item.showingProxies && viewModel.checkedFlag {
+                            item.showingProxies = true
                         }
                     }
                 }
@@ -67,7 +72,10 @@ struct EndPointRowView: View {
                                     node.name == nodeName
                                 }))
                             }
-                            NodeListViewModel.shared.refresh()
+                            if oldEndpointName != item.name {
+                                EndPointListViewModel.shared.renameNodes(oldName: oldEndpointName, newName: item.name)
+                                NodeListViewModel.shared.rename(oldName: oldEndpointName, newName: item.name)
+                            }
                             saveClashConfigToNewConfig()
                         }
                 }
@@ -83,9 +91,10 @@ struct EndPointsView: View {
     @State var showingAddEndPoint: Bool = false
     @State var showingDeleteEndPoint: Bool = false
     @State var showingAlert: Bool = false
+    @State var alertInfo = ""
     @StateObject var listViewModel: EndPointListViewModel = EndPointListViewModel.shared
     @StateObject var favoriteListViewModel: FavoriteListViewModel = FavoriteListViewModel.shared
-
+    
     func deleteEndPoint(id: UUID) {
         listViewModel.items.removeAll { item in
             item.id == id
@@ -104,12 +113,15 @@ struct EndPointsView: View {
         .alert(isPresented: $showingDeleteEndPoint) {
             Alert(title: Text("Do you really want to delete \(selectItems.count == 1 ? "this proxy" : "these proxies")?"),
                   primaryButton: .default(Text("Delete"), action: {
+                    var byName: Set<String> = []
                     for item in selectItems {
                         deleteEndPoint(id: item.id)
+                        byName.insert(item.name)
                     }
                     print("delete!")
                     selectItems.removeAll()
-                    NodeListViewModel.shared.refresh()
+                    EndPointListViewModel.shared.removeNodes(byName: byName)
+                    NodeListViewModel.shared.remove(byName: byName)
                     listViewModel.objectWillChange.send()
                     saveClashConfigToNewConfig()
                   }),
@@ -137,13 +149,22 @@ struct EndPointsView: View {
             }
             ToolbarItem {
                 Button {
-                    var isUsing = false
+                    var isUsingByRule = false
+                    var isUsingByEndpoint = false
                     for item in selectItems {
                         if RuleListViewModel.shared.isUsing(endpointName: item.name) {
-                            isUsing = true
+                            isUsingByRule = true
+                        }
+                        if EndPointListViewModel.shared.isUsing(proxyName: item.name) {
+                            isUsingByEndpoint = true
                         }
                     }
-                    if isUsing {
+                    
+                    if isUsingByEndpoint {
+                        alertInfo = "Some endpoints are using selected endpoints."
+                        showingAlert = true
+                    } else if isUsingByRule {
+                        alertInfo = "Some rules are using selected endpoints."
                         showingAlert = true
                     } else {
                         showingDeleteEndPoint = true
@@ -153,7 +174,7 @@ struct EndPointsView: View {
                         .foregroundColor(selectItems.count >= 1 ? .red : .gray)
                 }
                 .alert(isPresented: $showingAlert) {
-                    Alert(title: Text("Can not delete! \nSome endpoints are using by rule."),
+                    Alert(title: Text(alertInfo),
                           dismissButton: .default(Text("Got it")))
                 }
                 .keyboardShortcut(.delete, modifiers: [])
@@ -161,6 +182,15 @@ struct EndPointsView: View {
             }
             ToolbarItem {
                 Button {
+                    for viewModel in NodeListViewModel.shared.buildinViewItems {
+                        viewModel.checkedFlag = false
+                    }
+                    for viewModel in NodeListViewModel.shared.endpointViewItems {
+                        viewModel.checkedFlag = false
+                    }
+                    for viewModel in NodeListViewModel.shared.proxyViewItems {
+                        viewModel.checkedFlag = false
+                    }
                     showingAddEndPoint = true
                 } label: {
                     Image(systemName: "plus")

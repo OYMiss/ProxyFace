@@ -28,6 +28,7 @@ struct ProxyDetailView: View {
                 TextField("", text: $item.name)
                     .textFieldStyle(PlainTextFieldStyle())
                     .font(.title2)
+                    .disabled(EndPointListViewModel.shared.isUsing(proxyName: item.name))
             }
             HStack {
                 Text("Type")

@@ -65,15 +65,6 @@ class EndPointListViewModel: ObservableObject {
     
     static var shared = EndPointListViewModel()
     
-    func cleanDeleteProxy() {
-        for item in items {
-            item.nodes.removeAll { proxyName in
-                return !NodeListViewModel.shared.items.contains(where: { nodeViewModel in
-                    nodeViewModel.name == proxyName
-                })
-            }
-        }
-    }
     
     func loadConfig(config: ClashConfig) {
         items.removeAll()
@@ -118,6 +109,31 @@ class EndPointListViewModel: ObservableObject {
                     }
                   })
 
+    }
+    
+    func removeNodes(byName: Set<String>) {
+        for item in items {
+            item.nodes.removeAll { node in
+                byName.contains(node)
+            }
+        }
+    }
+    
+    func renameNodes(oldName: String, newName: String) {
+        for item in items {
+            item.nodes = item.nodes.map { nodeStr in
+                nodeStr == oldName ? newName : nodeStr
+            }
+        }
+    }
+    
+    func isUsing(proxyName: String) -> Bool {
+        for endpointViewItem in self.items {
+            if endpointViewItem.proxy == proxyName {
+                return true
+            }
+        }
+        return false
     }
     
     private init() {

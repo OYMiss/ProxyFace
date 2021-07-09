@@ -42,37 +42,58 @@ class NodeListViewModel: ObservableObject {
     @Published var endpointViewItems: [NodeViewModel]
     @Published var proxyViewItems: [NodeViewModel]
     @Published var buildinViewItems: [NodeViewModel]
-    @Published var items: [NodeViewModel]
     
     static var shared = NodeListViewModel()
     
-    func refresh() {
+    func rename(oldName: String, newName: String) {
+        for item in endpointViewItems {
+            if item.name == oldName {
+                item.name = newName
+            }
+        }
+        for item in proxyViewItems {
+            if item.name == oldName {
+                item.name = newName
+            }
+        }
+    }
+    
+    func remove(byName: Set<String>) {
+        endpointViewItems.removeAll { endpointViewItem in
+            byName.contains(endpointViewItem.name)
+        }
+        proxyViewItems.removeAll { proxyViewItem in
+            byName.contains(proxyViewItem.name)
+        }
+    }
+    
+    func add(proxyViewModel: ProxyViewModel) {
+        self.proxyViewItems.append(NodeViewModel(proxyItem: proxyViewModel))
+    }
+    
+    func add(endpointViewModel: EndPointViewModel) {
+        self.endpointViewItems.append(NodeViewModel(endPointitem: endpointViewModel))
+    }
+    
+    private init() {
+        self.buildinViewItems = [NodeViewModel(name: "DIRECT", type: "buildin"),
+                                 NodeViewModel(name: "REJECT", type: "buildin")]
+        endpointViewItems = []
+        proxyViewItems = []
+        
         let pItems = ProxyListViewModel.shared.items
         let eItems = EndPointListViewModel.shared.items
-        items.removeAll()
         endpointViewItems.removeAll()
         proxyViewItems.removeAll()
-        items.append(contentsOf: self.buildinViewItems)
         for item in eItems {
             let nitem = NodeViewModel(endPointitem: item)
-            items.append(nitem)
             endpointViewItems.append(nitem)
         }
         
         for item in pItems {
             let nitem = NodeViewModel(proxyItem: item)
             proxyViewItems.append(nitem)
-            items.append(nitem)
         }
-    }
-    
-    private init() {
-        self.buildinViewItems = [NodeViewModel(name: "DIRECT", type: "buildin"),
-                                 NodeViewModel(name: "REJECT", type: "buildin")]
-        items = []
-        endpointViewItems = []
-        proxyViewItems = []
-        self.refresh()
     }
 }
 

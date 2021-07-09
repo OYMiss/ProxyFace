@@ -249,7 +249,6 @@ func saveProxyConfig() {
 
 func saveEndPointConfig() {
     var newItems:[EndPointConfig] = []
-    EndPointListViewModel.shared.cleanDeleteProxy()
     for endPointViewItem in EndPointListViewModel.shared.items {
         let endPointItem = endPointViewItem.toEndPointItem()
         let endPointConfig = EndPointConfig(name: endPointItem.name, type: endPointItem.type, proxies: Array(endPointItem.proxies), use: nil)

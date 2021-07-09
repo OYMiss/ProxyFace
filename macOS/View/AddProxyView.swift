@@ -67,7 +67,7 @@ struct AddProxyView: View {
                 
                 Button("OK") {
                     listViewModel.items.append(newProxyViewModel)
-                    NodeListViewModel.shared.refresh()
+                    NodeListViewModel.shared.add(proxyViewModel: newProxyViewModel)
                     saveClashConfigToNewConfig()
                     presentationMode.wrappedValue.dismiss()
                 }

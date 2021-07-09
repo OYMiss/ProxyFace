@@ -19,6 +19,7 @@ struct EndPointDetailView: View {
                 TextField("", text: $item.name)
                     .textFieldStyle(PlainTextFieldStyle())
                     .font(.title2)
+                    .disabled(EndPointListViewModel.shared.isUsing(proxyName: item.name) || RuleListViewModel.shared.isUsing(endpointName: item.name))
             }
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
