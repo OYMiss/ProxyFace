@@ -56,6 +56,17 @@ struct EndPointRowView: View {
                         .padding()
                         .onDisappear() {
                             print("endpoint popover on disapper")
+                            item.nodes.removeAll { nodeName in
+                                (!item.showingBuildinNodes && nodeListViewModel.buildinViewItems.contains(where: { node in
+                                    node.name == nodeName
+                                })) ||
+                                (!item.showingProxies && nodeListViewModel.proxyViewItems.contains(where: { node in
+                                    node.name == nodeName
+                                })) ||
+                                (!item.showingEndpoints && nodeListViewModel.endpointViewItems.contains(where: { node in
+                                    node.name == nodeName
+                                }))
+                            }
                             NodeListViewModel.shared.refresh()
                             saveClashConfigToNewConfig()
                         }
@@ -156,9 +167,7 @@ struct EndPointsView: View {
                         .foregroundColor(.blue)
                 }
             }
-        }).onAppear() {
-            listViewModel.fetchAllEndPointsStatus()
-        }
+        })
     }
 }
 

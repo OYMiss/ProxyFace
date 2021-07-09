@@ -48,6 +48,7 @@ class HomeViewModel: Identifiable, Hashable, ObservableObject {
             .sink(receiveCompletion: { print ("Received completion: \($0).") },
                   receiveValue: { clashStatusEntity  in
                     self.clashStatus = "Running"
+                    EndPointListViewModel.shared.fetchAllEndPointsStatus()
                   })
     }
 }
