@@ -91,23 +91,9 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3C1621572692E57A005414EC /* SupportFiles */ = {
-			isa = PBXGroup;
-			children = (
-				3C816CE22695707F00A960BE /* configure_proxy.sh */,
-				3C16215C2692E57A005414EC /* config.yaml */,
-				3C1621902692E57A005414EC /* clash */,
-				3C1621582692E57A005414EC /* install.sh */,
-				3C1621592692E57A005414EC /* clean.sh */,
-				3C76845B269727C800445890 /* user_config.yaml */,
-			);
-			path = SupportFiles;
-			sourceTree = "<group>";
-		};
 		3C6EC0AB2688A84E00059644 = {
 			isa = PBXGroup;
 			children = (
-				3C1621572692E57A005414EC /* SupportFiles */,
 				3C6EC0C42688A84F00059644 /* macOS */,
 				3C6EC0BC2688A84F00059644 /* Products */,
 			);
@@ -174,6 +160,12 @@
 		3CBD04212690461600ED80BB /* clash */ = {
 			isa = PBXGroup;
 			children = (
+				3C816CE22695707F00A960BE /* configure_proxy.sh */,
+				3C16215C2692E57A005414EC /* config.yaml */,
+				3C1621902692E57A005414EC /* clash */,
+				3C1621582692E57A005414EC /* install.sh */,
+				3C1621592692E57A005414EC /* clean.sh */,
+				3C76845B269727C800445890 /* user_config.yaml */,
 				3CBD04222690470500ED80BB /* start_clash.sh */,
 				3CBD04242690471700ED80BB /* stop_clash.sh */,
 			);
