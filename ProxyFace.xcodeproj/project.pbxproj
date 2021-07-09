@@ -56,7 +56,6 @@
 		3C4F2F96268AB7D0002BFD85 /* ProxyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyDetailView.swift; sourceTree = "<group>"; };
 		3C6B6E0F268DD1ED00144B53 /* AddEndPointView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEndPointView.swift; sourceTree = "<group>"; };
 		3C6B6E11268DD26B00144B53 /* EndPointDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointDetailView.swift; sourceTree = "<group>"; };
-		3C6EC0B22688A84E00059644 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		3C6EC0B32688A84E00059644 /* ProxyFaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyFaceApp.swift; sourceTree = "<group>"; };
 		3C6EC0B62688A84F00059644 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3C6EC0C32688A84F00059644 /* ProxyFace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProxyFace.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,7 +116,6 @@
 				3C2146BE268F660900B04F19 /* ConfigLoader.swift */,
 				3C98570E268DC667001653FC /* Entity.swift */,
 				3C6EC0B32688A84E00059644 /* ProxyFaceApp.swift */,
-				3C6EC0B12688A84E00059644 /* ProxyFace.xcdatamodeld */,
 				3C6EC0B62688A84F00059644 /* Assets.xcassets */,
 				3C6EC0C62688A84F00059644 /* macOS.entitlements */,
 				3C6EC0C52688A84F00059644 /* Info.plist */,
@@ -480,19 +478,6 @@
 			productName = Yams;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		3C6EC0B12688A84E00059644 /* ProxyFace.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				3C6EC0B22688A84E00059644 /* Shared.xcdatamodel */,
-			);
-			currentVersion = 3C6EC0B22688A84E00059644 /* Shared.xcdatamodel */;
-			path = ProxyFace.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 3C6EC0AC2688A84E00059644 /* Project object */;
 }
