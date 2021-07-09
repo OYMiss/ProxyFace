@@ -9,24 +9,12 @@ import SwiftUI
 
 struct SettingView: View {
     var body: some View {
-        List {
-            Button(action: {
-                overwriteClashConfig()
-            }, label: {
-                Text("Save and Restart")
-            })
-            
+        List {            
             Button(action: {
                 StopClash()
                 StartClash()
             }, label: {
-                Text("Discard and Restart")
-            })
-            
-            Button(action: {
-                overwriteClashConfig(restart: false)
-            }, label: {
-                Text("Save")
+                Text("Restart Clash Core")
             })
         }
     }

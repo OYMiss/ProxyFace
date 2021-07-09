@@ -33,7 +33,7 @@ struct ProxyRowView: View {
                             EndPointListViewModel.shared.renameNodes(oldName: oldProxyName, newName: item.name)
                             NodeListViewModel.shared.rename(oldName: oldProxyName, newName: item.name)
                         }
-                        saveClashConfigToNewConfig()
+                        saveClashConfig()
                     }
             }
         }
@@ -77,7 +77,7 @@ struct ProxiesView: View {
                     selectItems.removeAll()
                     NodeListViewModel.shared.remove(byName: byName)
                     EndPointListViewModel.shared.removeNodes(byName: byName)
-                    saveClashConfigToNewConfig()
+                    saveClashConfig()
                   }),
                   secondaryButton: .cancel({})
             )

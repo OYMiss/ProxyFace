@@ -38,7 +38,7 @@ struct AddEndPointView: View {
                 Button("OK") {
                     listViewModel.items.append(newEndPointViewModel)
                     NodeListViewModel.shared.add(endpointViewModel: newEndPointViewModel)
-                    saveClashConfigToNewConfig()
+                    saveClashConfig()
                     presentationMode.wrappedValue.dismiss()
                 }
                 .keyboardShortcut(.defaultAction)

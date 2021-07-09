@@ -11,7 +11,7 @@ struct AddProxyView: View {
     @StateObject var newProxyViewModel = ProxyViewModel()
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var listViewModel: ProxyListViewModel
-    
+    @State var save = false
     var body: some View {
         VStack(alignment: .trailing) {
             HStack {
@@ -25,53 +25,26 @@ struct AddProxyView: View {
                             .padding(.bottom, 4)
                             .padding(.top, 4)
                             .frame(width: 320)
+                            .onDisappear() {
+                                if save {
+                                    listViewModel.items.append(newProxyViewModel)
+                                    NodeListViewModel.shared.add(proxyViewModel: newProxyViewModel)
+                                    saveClashConfig()
+                                }
+                            }
                     }
-//                    GroupBox(
-//                        label: Label("Status", systemImage: "waveform.path.ecg")
-//                            .foregroundColor(.gray)
-//                    ) {
-//                        VStack {
-//                            HStack {
-//                                Text("Latency").frame(width: 64, alignment: .trailing)
-//                                .foregroundColor(.secondary)
-//                                Text("50ms").foregroundColor(.green)
-//                                Spacer()
-//                                Button(action: {
-//                                    print("test")
-//                                }, label: {
-//                                    Text("Test")
-//                                })
-//                            }
-//                        }
-//                        .frame(width: 320, alignment: .leading)
-//                    }
                 }
-
-//                VStack {
-
-//                    GroupBox(
-//                        label: Label("Raw Text", systemImage: "text.alignleft")
-//                            .foregroundColor(.gray)
-//                    ) {
-//                        TextEditor(text: .constant("name: 俄罗斯 AIA 01\ntype: shadowsocks\nserver: 162.14.19.131\nport: 758\npassword: huaweibest"))
-//                    }
-//                }.frame(minWidth: 100)
-
             }
             HStack {
                 Button("Cancel") {
                     presentationMode.wrappedValue.dismiss()
                 }
-//                .buttonStyle(BorderedButtonStyle())
                 .keyboardShortcut(.cancelAction)
                 
                 Button("OK") {
-                    listViewModel.items.append(newProxyViewModel)
-                    NodeListViewModel.shared.add(proxyViewModel: newProxyViewModel)
-                    saveClashConfigToNewConfig()
+                    save = true
                     presentationMode.wrappedValue.dismiss()
                 }
-//                .buttonStyle(BorderedButtonStyle())
                 .keyboardShortcut(.defaultAction)
             }.padding(.top, 8)
         }.padding()

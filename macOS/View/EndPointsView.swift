@@ -76,7 +76,7 @@ struct EndPointRowView: View {
                                 EndPointListViewModel.shared.renameNodes(oldName: oldEndpointName, newName: item.name)
                                 NodeListViewModel.shared.rename(oldName: oldEndpointName, newName: item.name)
                             }
-                            saveClashConfigToNewConfig()
+                            saveClashConfig()
                         }
                 }
         }
@@ -123,7 +123,7 @@ struct EndPointsView: View {
                     EndPointListViewModel.shared.removeNodes(byName: byName)
                     NodeListViewModel.shared.remove(byName: byName)
                     listViewModel.objectWillChange.send()
-                    saveClashConfigToNewConfig()
+                    saveClashConfig()
                   }),
                   secondaryButton: .cancel({})
             )

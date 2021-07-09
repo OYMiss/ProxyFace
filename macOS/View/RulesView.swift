@@ -18,17 +18,6 @@ struct RuleRowView: View{
                 Text(item.name)
                 Text(item.type).font(.footnote).foregroundColor(.secondary)
             }
-//            Image(systemName: "info.circle").font(.title3)
-//                .foregroundColor(isSelected ? .white : .blue)
-//                .visiableWhen(item.type == "RULE-SET" && item.showingPopoverButton)
-//                .onTapGesture {
-//                    item.showingPopover = true
-//                }
-//                .popover(isPresented: $item.showingPopover, arrowEdge: Edge.trailing) {
-//                    RuleDetailView(item: item)
-//                        .frame(width: 220)
-//                        .padding()
-//                }
             Spacer()
             Text(item.endpoint).foregroundColor(.secondary)
 
@@ -69,7 +58,7 @@ struct RulesView: View {
                     }
                     print("delete!")
                     selectItems.removeAll()
-                    saveClashConfigToNewConfig()
+                    saveClashConfig()
                   }),
                   secondaryButton: .cancel({})
             )

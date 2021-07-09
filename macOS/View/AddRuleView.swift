@@ -37,8 +37,7 @@ struct AddRuleView: View {
                 
                 Button("OK") {
                     listViewModel.items.insert(newRuleViewModel, at: 0)
-//                    listViewModel.items.append(newRuleViewModel)
-                    saveClashConfigToNewConfig()
+                    saveClashConfig()
                     presentationMode.wrappedValue.dismiss()
                 }
                 .keyboardShortcut(.defaultAction)

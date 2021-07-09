@@ -272,38 +272,10 @@ func saveRuleConfig() {
     ConfigManager.config.clashConfig?.rules = newItems
 }
 
-func overwriteClashConfig(restart: Bool = true) {
-    let fileManager = FileManager.default
-    
-    saveClashConfigToNewConfig()
-    if restart {
-        StopClash()
-    }
-    do {
-        try fileManager.removeItem(at: ConfigManager.config.clashFileUrl)
-    } catch {
-        print("error at remove \(error)")
-    }
-    
-    do {
-        try fileManager.copyItem(at: ConfigManager.config.clashNewFileUrl, to: ConfigManager.config.clashFileUrl)
-    } catch {
-        print("error at copy \(error)")
-    }
-    
-    if restart {
-        StartClash()
-    }
- 
-}
-
-func saveClashConfigToNewConfig() {
+func saveClashConfig() {
     let fileManager = FileManager.default
 
     do {
-//        EndPointListViewModel.shared.loadConfig(config: clashConfig)
-//        ProxyListViewModel.shared.loadConfig(config: clashConfig)
-//        RuleListViewModel.shared.loadConfig(config: clashConfig)
         saveProxyConfig()
         saveEndPointConfig()
         saveRuleConfig()
@@ -313,7 +285,7 @@ func saveClashConfigToNewConfig() {
         let encodedYAML = try encoder.encode(clashConfig)
         let encodedCN = encodedYAML.utf8DecodedString()
         let newData = encodedCN.data(using: .utf8)
-        fileManager.createFile(atPath: ConfigManager.config.clashNewFileUrl.path, contents: newData)
+        fileManager.createFile(atPath: ConfigManager.config.clashFileUrl.path, contents: newData)
     } catch {
         print("\(error)")
     }
