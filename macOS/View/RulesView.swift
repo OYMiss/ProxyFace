@@ -51,7 +51,7 @@ struct RulesView: View {
             AddRuleView().environmentObject(listViewModel)
         }
         .alert(isPresented: $showingDeleteRule) {
-            Alert(title: Text("Do you really want to delete \(selectItems.count == 1 ? "this proxy" : "these proxies")?"),
+            Alert(title: Text("Do you really want to delete \(selectItems.count == 1 ? "this rule" : "these rules")?"),
                   primaryButton: .default(Text("Delete"), action: {
                     for item in selectItems {
                         deleteRule(id: item.id)

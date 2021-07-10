@@ -111,7 +111,7 @@ struct EndPointsView: View {
             AddEndPointView().environmentObject(listViewModel)
         }
         .alert(isPresented: $showingDeleteEndPoint) {
-            Alert(title: Text("Do you really want to delete \(selectItems.count == 1 ? "this proxy" : "these proxies")?"),
+            Alert(title: Text("Do you really want to delete \(selectItems.count == 1 ? "this endpoint" : "these endpoints")?"),
                   primaryButton: .default(Text("Delete"), action: {
                     var byName: Set<String> = []
                     for item in selectItems {
@@ -144,7 +144,6 @@ struct EndPointsView: View {
                     Image(systemName: "heart")
                         .foregroundColor(selectItems.count >= 1 ? .blue : .gray)
                 }
-                .keyboardShortcut(.delete, modifiers: [])
                 .disabled(selectItems.isEmpty)
             }
             ToolbarItem {
