@@ -139,7 +139,7 @@ func loadClashConfig() {
             ConfigClash()
         }
 
-        print("config exist: \(fileManager.fileExists(atPath: ConfigManager.config.clashFileUrl.path)), \(ConfigManager.config.clashFileUrl.path)")
+        NSLog("config exist: \(fileManager.fileExists(atPath: ConfigManager.config.clashFileUrl.path))")
         if fileManager.fileExists(atPath: ConfigManager.config.clashFileUrl.path) {
             let data = fileManager.contents(atPath: ConfigManager.config.clashFileUrl.path)
             if data != nil {
@@ -158,7 +158,7 @@ func loadClashConfig() {
             }
         }
     } catch {
-        print("\(error)")
+        NSLog("\(error)")
     }
 }
 
@@ -166,7 +166,7 @@ func loadUserConfig() {
     do {
         let fileManager = FileManager.default
 
-        print("user config exist: \(fileManager.fileExists(atPath: ConfigManager.config.userConfigUrl.path)), \(ConfigManager.config.userConfigUrl.path)")
+        NSLog("user config exist: \(fileManager.fileExists(atPath: ConfigManager.config.userConfigUrl.path))")
         if fileManager.fileExists(atPath: ConfigManager.config.userConfigUrl.path) {
             let data = fileManager.contents(atPath: ConfigManager.config.userConfigUrl.path)
             if data != nil {
@@ -181,7 +181,7 @@ func loadUserConfig() {
             }
         }
     } catch {
-        print("\(error)")
+        NSLog("\(error)")
     }
 }
 
@@ -191,7 +191,7 @@ func saveUserConfig() {
     do {
         try fileManager.removeItem(at: ConfigManager.config.userConfigUrl)
     } catch {
-        print("error at remove \(error)")
+        NSLog("error at remove \(error)")
     }
     
     do {
@@ -209,7 +209,7 @@ func saveUserConfig() {
             fileManager.createFile(atPath: ConfigManager.config.userConfigUrl.path, contents: newData)
         }
     } catch {
-        print("error at create \(error)")
+        NSLog("error at create \(error)")
     }
 }
 
@@ -287,13 +287,13 @@ func saveClashConfig() {
         let newData = encodedCN.data(using: .utf8)
         fileManager.createFile(atPath: ConfigManager.config.clashFileUrl.path, contents: newData)
     } catch {
-        print("\(error)")
+        NSLog("\(error)")
     }
 
 }
 
 func ConfigClash() {
-    print("installing clash")
+    NSLog("installing clash")
     let bundle = Bundle.main
     let bashPath = bundle.path(forResource: "install.sh", ofType: nil)
     let str = bundle.resourceURL?.path
@@ -307,7 +307,7 @@ func ConfigClash() {
 }
 
 func StartClash() {
-    print("starting clash")
+    NSLog("starting clash")
     let bundle = Bundle.main
     let bashPath = bundle.path(forResource: "start_clash.sh", ofType: nil)
     let task = Process.launchedProcess(launchPath: bashPath!, arguments: [""])
@@ -320,7 +320,7 @@ func StartClash() {
 }
 
 func StopClash() {
-    print("stoping clash")
+    NSLog("stoping clash")
     let bundle = Bundle.main
     let bashPath = bundle.path(forResource: "stop_clash.sh", ofType: nil)
     let task = Process.launchedProcess(launchPath: bashPath!, arguments: [""])
@@ -333,7 +333,7 @@ func StopClash() {
 }
 
 func EnableSystemProxy(httpPort: String, socksPort: String) {
-    print("enable system proxy")
+    NSLog("enable system proxy")
     let bundle = Bundle.main
     let bashPath = bundle.path(forResource: "configure_proxy.sh", ofType: nil)
     let task = Process.launchedProcess(launchPath: bashPath!, arguments: ["on", httpPort, socksPort])
@@ -346,7 +346,7 @@ func EnableSystemProxy(httpPort: String, socksPort: String) {
 }
 
 func DisableSystemProxy() {
-    print("disable system proxy")
+    NSLog("disable system proxy")
     let bundle = Bundle.main
     let bashPath = bundle.path(forResource: "configure_proxy.sh", ofType: nil)
     let task = Process.launchedProcess(launchPath: bashPath!, arguments: ["off"])

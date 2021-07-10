@@ -25,7 +25,7 @@ struct EndPointRowView: View {
             }
             .onChange(of: item.proxy, perform: { proxy in
                 changeEndPointTo(endPointName: item.name, proxyName: proxy)
-                print("Changed to \(proxy)")
+                NSLog("change proxy of \(item.name) to \(proxy)")
             })
             .frame(width: 128)
             Image(systemName: "info.circle").font(.title3).foregroundColor(isSelected ? .white : .blue)
@@ -60,7 +60,6 @@ struct EndPointRowView: View {
                         .frame(width: 220, height: 240)
                         .padding()
                         .onDisappear() {
-                            print("endpoint popover on disapper")
                             item.nodes.removeAll { nodeName in
                                 (!item.showingBuildinNodes && nodeListViewModel.buildinViewItems.contains(where: { node in
                                     node.name == nodeName
@@ -116,9 +115,9 @@ struct EndPointsView: View {
                     var byName: Set<String> = []
                     for item in selectItems {
                         deleteEndPoint(id: item.id)
+                        NSLog("delete endpoint which name = \(item.name)")
                         byName.insert(item.name)
                     }
-                    print("delete!")
                     selectItems.removeAll()
                     EndPointListViewModel.shared.removeNodes(byName: byName)
                     NodeListViewModel.shared.remove(byName: byName)

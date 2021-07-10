@@ -7,11 +7,7 @@
 
 import SwiftUI
 
-struct HomeView: View {
-    private func connect() {
-        print("connect")
-    }
-    
+struct HomeView: View {    
     @StateObject var listViewModel: FavoriteListViewModel = FavoriteListViewModel.shared
     @StateObject var homeViewModel: HomeViewModel = HomeViewModel.shared
     

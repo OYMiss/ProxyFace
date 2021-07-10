@@ -28,7 +28,6 @@ struct ProxyRowView: View {
                     .frame(width: 220)
                     .padding()
                     .onDisappear() {
-                        print("on disapper")
                         if item.name != oldProxyName {
                             EndPointListViewModel.shared.renameNodes(oldName: oldProxyName, newName: item.name)
                             NodeListViewModel.shared.rename(oldName: oldProxyName, newName: item.name)
@@ -51,7 +50,6 @@ struct ProxiesView: View {
         listViewModel.items.removeAll { item in
             item.id == id
         }
-        print("delete!")
     }
         
     var body: some View {
@@ -71,9 +69,9 @@ struct ProxiesView: View {
                     var byName: Set<String> = []
                     for item in selectItems {
                         deleteProxy(id: item.id)
+                        NSLog("delete proxy which name = \(item.name)")
                         byName.insert(item.name)
                     }
-                    print("delete!")
                     selectItems.removeAll()
                     NodeListViewModel.shared.remove(byName: byName)
                     EndPointListViewModel.shared.removeNodes(byName: byName)

@@ -42,13 +42,20 @@ struct ProxyFaceApp: App {
         #if os(macOS)
         NotificationCenter.default.addObserver(forName: NSApplication.willTerminateNotification, object: nil, queue: .main) { _ in
             // terminating
-            print("closing app")
+            NSLog("closing app")
             DisableSystemProxy()
             StopClash()
-            print("closed")
+            NSLog("closed")
         }
         
-        print("starting")
+        #if !DEBUG
+        let home = FileManager.default.homeDirectoryForCurrentUser
+        let logurl = home.appendingPathComponent("/Library/Logs/ProxyFace.log")
+        freopen(logurl.path.cString(using: String.Encoding.ascii)!, "a+", stderr)
+        freopen(logurl.path.cString(using: String.Encoding.ascii)!, "a+", stdout)
+        #endif
+        
+        NSLog("starting")
         loadClashConfig()
         loadUserConfig()
         StartClash()

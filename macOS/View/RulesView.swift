@@ -55,8 +55,8 @@ struct RulesView: View {
                   primaryButton: .default(Text("Delete"), action: {
                     for item in selectItems {
                         deleteRule(id: item.id)
+                        NSLog("delete rule which name = \(item.name)")
                     }
-                    print("delete!")
                     selectItems.removeAll()
                     saveClashConfig()
                   }),

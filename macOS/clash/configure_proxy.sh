@@ -22,7 +22,7 @@ while read line; do
             currentmac=$(echo "$ifout" | awk '/ether/{print $2}')
 
             # may have multiple active devices, so echo it here
-            echo "$currentservice, $currentdevice, $currentmac"
+            echo "system proxy is setting on $currentservice, $currentdevice, $currentmac"
 
             if [ "$state" = "on" ]; then
                 networksetup -setwebproxy "$currentservice" "127.0.0.1" $http_port

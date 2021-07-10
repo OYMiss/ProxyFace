@@ -49,19 +49,20 @@ func changeEndPointTo(endPointName: String, proxyName: String) {
     let task = URLSession.shared.dataTask(with: request) { data, response, error in
         guard let data = data,
             let response = response as? HTTPURLResponse,
-            error == nil else {                                              // check for fundamental networking error
-            print("error", error ?? "Unknown error")
+            error == nil else {
+            // check for fundamental networking error
+            NSLog("fundamental networking error")
             return
         }
-
+        
         guard (200 ... 299) ~= response.statusCode else {                    // check for http errors
-            print("statusCode should be 2xx, but is \(response.statusCode)")
-            print("response = \(response)")
+            NSLog("statusCode should be 2xx, but is \(response.statusCode)")
+            NSLog("response = \(response)")
             return
         }
         
         let responseString = String(data: data, encoding: .utf8)
-        print("responseString = \(responseString!)")
+        NSLog("change success \(responseString!)")
     }
 
     task.resume()

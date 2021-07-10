@@ -86,25 +86,21 @@ struct ProxyDetailView: View {
                 if item.extra["cipher"] != nil {
                     method = item.extra["cipher"] as! String
                 }
-                print("method: \(method)")
             }
             if item.type == "trojan" {
                 skipCertVerify = item.extra["skipCertVerify"] as! Bool
-                print("skipCertVerify: \(skipCertVerify)")
             }
         }
         .onDisappear() {
             if item.type == "shadowsocks" {
-                print("method: \(method)")
+                NSLog("set proxy extra value: method = \(method)")
                 item.extra["cipher"] = method
             }
             if item.type == "trojan" {
-                print("skipCertVerify: \(skipCertVerify)")
+                NSLog("set proxy extra value: skipCertVerify = \(skipCertVerify)")
                 item.extra["skipCertVerify"] = skipCertVerify
             }
-            
         }
-        
     }
 }
 

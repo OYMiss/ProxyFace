@@ -82,7 +82,7 @@ class EndPointListViewModel: ObservableObject {
     
     func fetchAllEndPointsStatus() {
         let url = URL(string: "http://127.0.0.1:6170/proxies")!
-        print("Fetching AllEndPointsStatus")
+        NSLog("fetching endpoints status from \(url.path)")
         cancellable = URLSession.shared
             .dataTaskPublisher(for: url)
             .tryMap() { element -> Data in
@@ -94,7 +94,7 @@ class EndPointListViewModel: ObservableObject {
                 }
             .decode(type: ProxiesStatus.self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { print ("Received completion: \($0).") },
+            .sink(receiveCompletion: { NSLog("received completion \($0).") },
                   receiveValue: { proxiesStatus  in
                     for proxyStatusPair in proxiesStatus.proxies {
                         let proxyStatus = proxyStatusPair.value

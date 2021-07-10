@@ -34,13 +34,13 @@ class HomeViewModel: Identifiable, Hashable, ObservableObject {
     
     func fetchClashStatus() {
         let url = URL(string: "http://127.0.0.1:6170")!
-        print("check clash status")
+        NSLog("check clash status from \(url.path)")
         cancellable = URLSession.shared
             .dataTaskPublisher(for: url)
             .tryMap() { element -> Data in
                 guard let httpResponse = element.response as? HTTPURLResponse,
                     httpResponse.statusCode == 200 else {
-                        print("clash is not running")
+                        NSLog("clash is not running")
                         throw URLError(.badServerResponse)
                     }
                 return element.data
@@ -52,14 +52,13 @@ class HomeViewModel: Identifiable, Hashable, ObservableObject {
                     self.errorCnt += 1
                     if self.errorCnt >= 2 {
                         self.showNotRunningAlert = true
-                        print("clash is not running, check your config!")
+                        NSLog("clash is not running, check your config!")
                     } else {
                         self.fetchClashStatus()
                     }
                 } else {
-                    print("OK")
+                    NSLog("clash is running")
                     self.showNotRunningAlert = false
-                    print ("Received completion: \(complete).")
                 }
             },
                   receiveValue: { clashStatusEntity  in
