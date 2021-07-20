@@ -16,7 +16,6 @@ class HomeViewModel: Identifiable, Hashable, ObservableObject {
     var cancellable: AnyCancellable?
     @Published var clashStatus = "Stopped"
     @Published var showNotRunningAlert = false
-    @Published var errorCnt = 0
     
     let id = UUID()
     static func == (lhs: HomeViewModel, rhs: HomeViewModel) -> Bool {
@@ -49,13 +48,8 @@ class HomeViewModel: Identifiable, Hashable, ObservableObject {
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { complete in
                 if "\(complete)" != "finished" {
-                    self.errorCnt += 1
-                    if self.errorCnt >= 2 {
-                        self.showNotRunningAlert = true
-                        NSLog("clash is not running, check your config!")
-                    } else {
-                        self.fetchClashStatus()
-                    }
+                    self.showNotRunningAlert = true
+                    NSLog("clash is not running, check your config!")
                 } else {
                     NSLog("clash is running")
                     self.showNotRunningAlert = false

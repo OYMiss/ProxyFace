@@ -23,7 +23,13 @@ struct HomeView: View {
                     .alert(isPresented: $homeViewModel.showNotRunningAlert) {
                         Alert(title: Text("Clash is not running"),
                               message: Text("please check log and config."),
-                              dismissButton: .default(Text("OK")))
+                              primaryButton: .default(Text("Retry"), action: {
+                                StopClash()
+                                StartClash()
+                                sleep(1)
+                                homeViewModel.fetchClashStatus()
+                              }),
+                              secondaryButton: .default(Text("OK")))
                     }
             }
             
