@@ -15,11 +15,18 @@ struct HomeView: View {
     @State private var selectedProxy = 2
     @State var selectedItems: Set<EndPointViewModel> = []
     
+    private func delayFetchStatus() {
+        // Delay of 2.5 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            homeViewModel.fetchClashStatus()
+        }
+    }
+    
     var body: some View {
         List(selection: $selectedItems) {
             HStack {
                 Text(homeViewModel.clashStatus)
-                    .foregroundColor(homeViewModel.clashStatus == "Running Error" ? .red : .blue)
+                    .foregroundColor(homeViewModel.clashStatus == "Error" ? .red : .blue)
                     .alert(isPresented: $homeViewModel.showNotRunningAlert) {
                         Alert(title: Text("Clash is not running"),
                               message: Text("please check log and config."),
@@ -78,9 +85,7 @@ struct HomeView: View {
                     Image(systemName: "heart.slash")
                 })
             }
-        }.onAppear() {
-            homeViewModel.fetchClashStatus()
-        }
+        }.onAppear(perform: delayFetchStatus)
     }
 }
 

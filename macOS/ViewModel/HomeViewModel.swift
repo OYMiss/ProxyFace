@@ -14,7 +14,7 @@ struct ClashStatus: Codable {
 
 class HomeViewModel: Identifiable, Hashable, ObservableObject {
     var cancellable: AnyCancellable?
-    @Published var clashStatus = "Stopped"
+    @Published var clashStatus = "Checking"
     @Published var showNotRunningAlert = false
     
     let id = UUID()
@@ -49,8 +49,10 @@ class HomeViewModel: Identifiable, Hashable, ObservableObject {
             .sink(receiveCompletion: { complete in
                 if "\(complete)" != "finished" {
                     self.showNotRunningAlert = true
+                    self.clashStatus = "Error"
                     NSLog("clash is not running, check your config!")
                 } else {
+                    self.clashStatus = "Running"
                     NSLog("clash is running")
                     self.showNotRunningAlert = false
                 }
