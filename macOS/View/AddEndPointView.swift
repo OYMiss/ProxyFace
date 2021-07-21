@@ -15,7 +15,7 @@ struct AddEndPointView: View {
     var body: some View {
         VStack(alignment: .trailing) {
             HStack {
-                VStack {
+                VStack(alignment: .leading) {
                     GroupBox(
                         label: Label("EndPoint Setting", systemImage: "gear")
                             .foregroundColor(.gray)
@@ -36,6 +36,7 @@ struct AddEndPointView: View {
                 .keyboardShortcut(.cancelAction)
                 
                 Button("OK") {
+                    newEndPointViewModel.disablePicker = true
                     listViewModel.items.append(newEndPointViewModel)
                     NodeListViewModel.shared.add(endpointViewModel: newEndPointViewModel)
                     saveClashConfig()

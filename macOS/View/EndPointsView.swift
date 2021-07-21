@@ -23,6 +23,7 @@ struct EndPointRowView: View {
                     Text(proxyName)
                 }
             }
+            .disabled(item.disablePicker)
             .onChange(of: item.proxy, perform: { proxy in
                 changeEndPointTo(endPointName: item.name, proxyName: proxy)
                 NSLog("change proxy of \(item.name) to \(proxy)")

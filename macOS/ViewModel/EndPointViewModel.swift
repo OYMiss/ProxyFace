@@ -44,6 +44,7 @@ class EndPointViewModel: Identifiable, Hashable, ObservableObject {
     @Published var showingBuildinNodes = false
     @Published var showingPopover = false
     @Published var showingPopoverButton = false
+    @Published var disablePicker = false
     
     func toEndPointItem() -> EndPointItem {
         return EndPointItem(name: name, proxy: proxy, type: type, proxies: nodes)
