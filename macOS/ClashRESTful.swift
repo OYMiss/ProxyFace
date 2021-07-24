@@ -39,36 +39,6 @@ func fetch(request: URLRequest) -> AnyPublisher<Data, APIError> {
         .eraseToAnyPublisher()
 }
 
-
-func changeEndPointTo(endPointName: String, proxyName: String) {
-    let url = URL(string: "http://127.0.0.1:6170/proxies/\(endPointName.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)")!
-    var request = URLRequest(url: url)
-    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-    request.httpMethod = "PUT"
-    request.httpBody = "{\"name\": \"\(proxyName)\"}".data(using: .utf8)
-    let task = URLSession.shared.dataTask(with: request) { data, response, error in
-        guard let data = data,
-            let response = response as? HTTPURLResponse,
-            error == nil else {
-            // check for fundamental networking error
-            NSLog("fundamental networking error")
-            return
-        }
-        
-        guard (200 ... 299) ~= response.statusCode else {                    // check for http errors
-            NSLog("statusCode should be 2xx, but is \(response.statusCode)")
-            NSLog("response = \(response)")
-            return
-        }
-        
-        let responseString = String(data: data, encoding: .utf8)
-        NSLog("change success \(responseString!)")
-    }
-
-    task.resume()
-
-}
-
 struct ProxyStatus: Codable {
     let all: [String]?
     let history: [String]?

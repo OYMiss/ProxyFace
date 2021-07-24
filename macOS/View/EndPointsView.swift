@@ -25,10 +25,22 @@ struct EndPointRowView: View {
             }
             .disabled(item.disablePicker)
             .onChange(of: item.proxy, perform: { proxy in
-                changeEndPointTo(endPointName: item.name, proxyName: proxy)
+                item.changeEndPointTo(endPointName: item.name, proxyName: proxy)
                 NSLog("change proxy of \(item.name) to \(proxy)")
             })
             .frame(width: 128)
+            .alert(isPresented: $item.showConfigChangedAlert) {
+                Alert(title: Text("Config changed"),
+                      message: Text("When config is changed, you should restart core."),
+                      primaryButton: .default(Text("Restart"), action: {
+                        StopClash()
+                        StartClash()
+                        sleep(1)
+                        NSLog("retry change proxy of \(item.name) to \(item.lastErrorProxyName)")
+                        item.changeEndPointTo(endPointName: item.name, proxyName: item.lastErrorProxyName)
+                      }),
+                      secondaryButton: .default(Text("OK")))
+            }
             Image(systemName: "info.circle").font(.title3).foregroundColor(isSelected ? .white : .blue)
 //                .visiableWhen(item.showingPopoverButton)
                 .onTapGesture {

@@ -45,9 +45,60 @@ class EndPointViewModel: Identifiable, Hashable, ObservableObject {
     @Published var showingPopover = false
     @Published var showingPopoverButton = false
     @Published var disablePicker = false
-    
+    @Published var showConfigChangedAlert = false
+    @Published var lastErrorProxyName = ""
+    var cancellable: AnyCancellable?
+
     func toEndPointItem() -> EndPointItem {
         return EndPointItem(name: name, proxy: proxy, type: type, proxies: nodes)
+    }
+    
+    func changeEndPointTo(endPointName: String, proxyName: String) {
+        let url = URL(string: "http://127.0.0.1:6170/proxies/\(endPointName.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)")!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "PUT"
+        request.httpBody = "{\"name\": \"\(proxyName)\"}".data(using: .utf8)
+        cancellable = URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { (data: Data, response: URLResponse) -> Data in
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    throw APIError.apiError(reason: "clash not running")
+                }
+                guard httpResponse.statusCode == 204 else {
+                    // check for fundamental networking error
+                    throw APIError.apiError(reason: "proxy not found")
+                }
+                return data
+            }
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { complete in
+                switch complete {
+                case .finished:
+                    NSLog("change success")
+                    self.showConfigChangedAlert = false
+                    break
+                case .failure(let error):
+                    if error is APIError {
+                        let error = error as! APIError
+                        switch error {
+                        case .apiError(let reason):
+                            if reason == "proxy not found" {
+                                self.showConfigChangedAlert = true
+                                self.lastErrorProxyName = proxyName
+                                NSLog("config changed, should restart clash core!")
+                            } else {
+                                NSLog(reason)
+                            }
+                            break
+                        case .unknown:
+                            NSLog("unkown error")
+                            break
+                        }
+                    }
+                }
+            },
+            receiveValue: { value  in
+            })
     }
 }
 
