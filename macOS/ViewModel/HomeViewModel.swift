@@ -36,6 +36,8 @@ class HomeViewModel: Identifiable, Hashable, ObservableObject {
         NSLog("check clash status from \(url.path)")
         cancellable = URLSession.shared
             .dataTaskPublisher(for: url)
+            .delay(for: .seconds(2), scheduler: RunLoop.main, options: .none)
+            .retry(3)
             .tryMap() { element -> Data in
                 guard let httpResponse = element.response as? HTTPURLResponse,
                     httpResponse.statusCode == 200 else {

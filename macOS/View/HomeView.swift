@@ -18,7 +18,7 @@ struct HomeView: View {
     private func delayFetchStatus() {
         homeViewModel.clashStatus = "Checking"
         // Delay of 2.5 seconds
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             homeViewModel.fetchClashStatus()
         }
     }
