@@ -49,19 +49,22 @@ class HomeViewModel: Identifiable, Hashable, ObservableObject {
             .decode(type: ClashStatus.self, decoder: JSONDecoder())
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { complete in
-                if "\(complete)" != "finished" {
-                    self.showNotRunningAlert = true
-                    self.clashStatus = "Error"
-                    NSLog("clash is not running, check your config!")
-                } else {
+                switch complete {
+                case .finished:
                     self.clashStatus = "Running"
                     NSLog("clash is running")
                     self.showNotRunningAlert = false
+                    break
+                case .failure(_):
+                    self.showNotRunningAlert = true
+                    self.clashStatus = "Error"
+                    NSLog("clash is not running, check your config!")
+                    break
                 }
             },
-                  receiveValue: { clashStatusEntity  in
-                    self.clashStatus = "Running"
-                    EndPointListViewModel.shared.fetchAllEndPointsStatus()
-                  })
+            receiveValue: { clashStatusEntity  in
+                self.clashStatus = "Running"
+                EndPointListViewModel.shared.fetchAllEndPointsStatus()
+            })
     }
 }
