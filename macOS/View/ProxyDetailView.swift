@@ -57,6 +57,15 @@ struct ProxyDetailView: View {
                     .frame(width: textWidth, alignment: alignment)
                     .foregroundColor(.secondary)
                 TextField("", text: $item.port).textFieldStyle(PlainTextFieldStyle())
+                    .onChange(of: item.port, perform: { value in
+                             //do any validation or alteration here
+                        guard item.port == "" || Int(item.port) != nil else {
+                            item.port = item.port.filter({ c in
+                                c.isNumber
+                            })
+                            return
+                        }
+                        })
             }
             HStack {
                 Text("Method")

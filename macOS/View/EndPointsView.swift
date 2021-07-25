@@ -7,6 +7,20 @@
 
 import SwiftUI
 
+// for picker of endpoints
+// using onChange or onChange may cause bug
+// https://stackoverflow.com/questions/57518852/swiftui-picker-onchange-or-equivalent
+extension Binding {
+    func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
+        return Binding(
+            get: { self.wrappedValue },
+            set: { selection in
+                self.wrappedValue = selection
+                handler(selection)
+        })
+    }
+}
+
 struct EndPointRowView: View {
     @ObservedObject var item: EndPointViewModel
     var isSelected: Bool = false
@@ -18,16 +32,25 @@ struct EndPointRowView: View {
             Text(item.name)
             
             Spacer()
-            Picker("", selection: $item.proxy) {
+            // use extension of binding
+            Picker("", selection: $item.proxy.onChange({ proxy in
+                item.changeEndPointTo(endPointName: item.name, proxyName: proxy)
+                NSLog("change proxy of \(item.name) to \(proxy)")
+            })) {
                 ForEach(Array(item.nodes), id: \.self) { proxyName in
                     Text(proxyName)
                 }
             }
             .disabled(item.disablePicker)
-            .onChange(of: item.proxy, perform: { proxy in
-                item.changeEndPointTo(endPointName: item.name, proxyName: proxy)
-                NSLog("change proxy of \(item.name) to \(proxy)")
-            })
+            // bug here!
+//            .onChange(of: item.proxy, perform: { proxy in
+//                item.changeEndPointTo(endPointName: item.name, proxyName: proxy)
+//                NSLog("change proxy of \(item.name) to \(proxy)")
+//            })
+            // also have bug!
+//            .onReceive(Just(item.proxy)) {
+//                NSLog("Selected: \($0)")
+//            }
             .frame(width: 128)
             .alert(isPresented: $item.showConfigChangedAlert) {
                 Alert(title: Text("Config changed"),
@@ -84,6 +107,7 @@ struct EndPointRowView: View {
                                 }))
                             }
                             if oldEndpointName != item.name {
+                                item.name = NodeListViewModel.shared.getValidNodeName(nodeName: item.name)
                                 EndPointListViewModel.shared.renameNodes(oldName: oldEndpointName, newName: item.name)
                                 NodeListViewModel.shared.rename(oldName: oldEndpointName, newName: item.name)
                             }

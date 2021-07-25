@@ -29,6 +29,7 @@ struct ProxyRowView: View {
                     .padding()
                     .onDisappear() {
                         if item.name != oldProxyName {
+                            item.name = NodeListViewModel.shared.getValidNodeName(nodeName: item.name)
                             EndPointListViewModel.shared.renameNodes(oldName: oldProxyName, newName: item.name)
                             NodeListViewModel.shared.rename(oldName: oldProxyName, newName: item.name)
                         }

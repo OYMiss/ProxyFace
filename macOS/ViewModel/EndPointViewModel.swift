@@ -29,7 +29,7 @@ class EndPointViewModel: Identifiable, Hashable, ObservableObject {
     init() {
         id = UUID()
         name = "New EndPoint"
-        proxy = "Direct"
+        proxy = ""
         nodes = []
         type = "select"
     }

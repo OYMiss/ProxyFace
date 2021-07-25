@@ -27,6 +27,7 @@ struct AddProxyView: View {
                             .frame(width: 320)
                             .onDisappear() {
                                 if save {
+                                    newProxyViewModel.name = NodeListViewModel.shared.getValidNodeName(nodeName: newProxyViewModel.name)
                                     listViewModel.items.append(newProxyViewModel)
                                     NodeListViewModel.shared.add(proxyViewModel: newProxyViewModel)
                                     saveClashConfig()

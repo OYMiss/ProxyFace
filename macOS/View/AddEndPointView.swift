@@ -35,6 +35,11 @@ struct AddEndPointView: View {
                 .keyboardShortcut(.cancelAction)
                 
                 Button("OK") {
+                    newEndPointViewModel.name = NodeListViewModel.shared.getValidNodeName(nodeName: newEndPointViewModel.name)
+                    if newEndPointViewModel.nodes.count == 0 {
+                        newEndPointViewModel.nodes.append("DIRECT")
+                    }
+                    newEndPointViewModel.proxy = newEndPointViewModel.nodes[0]
                     newEndPointViewModel.disablePicker = true
                     listViewModel.items.append(newEndPointViewModel)
                     NodeListViewModel.shared.add(endpointViewModel: newEndPointViewModel)

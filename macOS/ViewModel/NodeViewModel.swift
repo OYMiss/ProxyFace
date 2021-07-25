@@ -45,6 +45,29 @@ class NodeListViewModel: ObservableObject {
     
     static var shared = NodeListViewModel()
     
+    func getValidNodeName(nodeName: String) -> String {
+        var validNodeName = nodeName
+        var cnt = 1
+        while NodeListViewModel.shared.isExistNodeName(nodeName: validNodeName) {
+            validNodeName = nodeName + "(\(cnt))"
+            cnt += 1
+        }
+        return validNodeName
+    }
+    
+    func isExistNodeName(nodeName: String) -> Bool {
+        return
+            buildinViewItems.contains { nodeViewModel in
+                nodeViewModel.name == nodeName
+            } ||
+            endpointViewItems.contains { nodeViewModel in
+                nodeViewModel.name == nodeName
+            } ||
+            proxyViewItems.contains { nodeViewModel in
+                nodeViewModel.name == nodeName
+            }
+    }
+    
     func rename(oldName: String, newName: String) {
         for item in endpointViewItems {
             if item.name == oldName {
