@@ -38,13 +38,11 @@ class FavoriteViewModel: Identifiable, Hashable, ObservableObject {
 
 class FavoriteListViewModel: ObservableObject {
 
-    @Published var endpointViewItems: Set<EndPointViewModel>
-    @Published var ruleViewItems: Set<RuleViewModel>
+    @Published var endpointViewItems: [EndPointViewModel]
     static let shared = FavoriteListViewModel()
     
     private init() {
         endpointViewItems = []
-        ruleViewItems = []
     }
     
     func loadConfig(config: UserConfig) {
@@ -52,7 +50,7 @@ class FavoriteListViewModel: ObservableObject {
             for endpointViewModel in EndPointListViewModel.shared.items {
                 let isMark = config.favoriteEndpoints?.contains(endpointViewModel.name)
                 if isMark != nil && isMark! {
-                    self.endpointViewItems.insert(endpointViewModel)
+                    self.endpointViewItems.append(endpointViewModel)
                 }
             }
         }

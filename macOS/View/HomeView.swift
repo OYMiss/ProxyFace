@@ -74,7 +74,9 @@ struct HomeView: View {
             ToolbarItem {
                 Button(action: {
                     for item in selectedItems {
-                        listViewModel.endpointViewItems.remove(item)
+                        listViewModel.endpointViewItems.removeAll { viewItem in
+                            viewItem == item
+                        }
                     }
                     saveUserConfig()
                 }, label: {
