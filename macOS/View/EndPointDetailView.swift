@@ -27,6 +27,9 @@ struct EndPointDetailView: View {
                         Toggle(isOn: $item.showingBuildinNodes) {
                             Label("Buildin", systemImage: "gearshape")
                         }
+                        .disabled(nodeListViewModel.buildinViewItems.contains(where: { nodeViewModel in
+                            nodeViewModel.name == item.proxy
+                        }))
                         .foregroundColor(.gray)
                         
                         ForEach(Array(zip(nodeListViewModel.buildinViewItems.indices, nodeListViewModel.buildinViewItems)), id: \.1) { i, proxyItem in
@@ -34,6 +37,7 @@ struct EndPointDetailView: View {
                                 Text(proxyItem.name)
                                     .foregroundColor(.primary)
                             }
+                            .disabled(item.proxy == proxyItem.name)
                             .toggleStyle(CheckboxToggleStyle())
                             .onChange(of: nodeListViewModel.buildinViewItems[i].checkedFlag, perform: { value in
                                 if value {
@@ -57,6 +61,9 @@ struct EndPointDetailView: View {
                         Toggle(isOn: $item.showingEndpoints) {
                             Label("EndPoints", systemImage: "bolt")
                         }
+                        .disabled(nodeListViewModel.endpointViewItems.contains(where: { nodeViewModel in
+                            nodeViewModel.name == item.proxy
+                        }))
                         .foregroundColor(.gray)
                         
                         ForEach(Array(zip(nodeListViewModel.endpointViewItems.indices, nodeListViewModel.endpointViewItems)), id: \.1) { i, proxyItem in
@@ -64,6 +71,7 @@ struct EndPointDetailView: View {
                                 Text(proxyItem.name)
                                     .foregroundColor(.primary)
                             }
+                            .disabled(item.proxy == proxyItem.name)
                             .toggleStyle(CheckboxToggleStyle())
                             .onChange(of: nodeListViewModel.endpointViewItems[i].checkedFlag, perform: { value in
                                 if value {
@@ -88,12 +96,16 @@ struct EndPointDetailView: View {
                         Toggle(isOn: $item.showingProxies) {
                             Label("Proxies", systemImage: "square.stack.3d.up")
                         }
+                        .disabled(nodeListViewModel.proxyViewItems.contains(where: { nodeViewModel in
+                            nodeViewModel.name == item.proxy
+                        }))
                         .foregroundColor(.gray)
                         ForEach(Array(zip(nodeListViewModel.proxyViewItems.indices, nodeListViewModel.proxyViewItems)), id: \.1) { i, proxyItem in
                             Toggle(isOn: $nodeListViewModel.proxyViewItems[i].checkedFlag) {
                                 Text(proxyItem.name)
                                     .foregroundColor(.primary)
                             }
+                            .disabled(item.proxy == proxyItem.name)
                             .toggleStyle(CheckboxToggleStyle())
                             .onChange(of: nodeListViewModel.proxyViewItems[i].checkedFlag, perform: { value in
                                 if value {
