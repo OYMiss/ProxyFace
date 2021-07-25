@@ -51,11 +51,6 @@ proxy-groups:
   proxies:
   - DIRECT
   - Proxy
-- name: LOL
-  type: select
-  proxies:
-  - DIRECT
-  - Proxy
 - name: Bilibili
   type: select
   proxies:
