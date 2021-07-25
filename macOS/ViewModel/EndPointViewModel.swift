@@ -102,14 +102,6 @@ class EndPointViewModel: Identifiable, Hashable, ObservableObject {
     }
 }
 
-func toEndPointViewModel(items: [EndPointItem]) -> [EndPointViewModel] {
-    var viewModels: [EndPointViewModel] = []
-    for item in items {
-        viewModels.append(EndPointViewModel(item))
-    }
-    return viewModels
-}
-
 class EndPointListViewModel: ObservableObject {
     var cancellable: AnyCancellable?
     

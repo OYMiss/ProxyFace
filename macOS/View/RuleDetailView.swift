@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-func ??<T>(lhs: Binding<Optional<T>>, rhs: T) -> Binding<T> {
-    Binding(
-        get: { lhs.wrappedValue ?? rhs },
-        set: { lhs.wrappedValue = $0 }
-    )
-}
-
 struct RuleDetailView: View {
     @ObservedObject var item: RuleViewModel
     var alignment: Alignment = .trailing
@@ -32,7 +25,6 @@ struct RuleDetailView: View {
                     Text("DOMAIN-KEYWORD").tag("DOMAIN-KEYWORD").foregroundColor(.secondary)
                     Text("PROCESS-NAME").tag("PROCESS-NAME").foregroundColor(.secondary)
                     Text("IP-CIDR").tag("IP-CIDR").foregroundColor(.secondary)
-//                    Text("RULE-SET").tag("RULE-SET").foregroundColor(.secondary)
                 }
                 .padding(.leading, -8)
             }
@@ -58,39 +50,7 @@ struct RuleDetailView: View {
                         Text(item.name).tag(item.name)
                     }
                 }.padding(.leading, -8)
-//                TextField("", text: $item.endpoint)
             }
-            
-//            VStack {
-//                HStack {
-//                    Text("Behavior")
-//                        .frame(width: 64, alignment: alignment)
-//                        .foregroundColor(.secondary)
-//                    TextField("", text: $item.extra["behavior"] ?? "").textFieldStyle(PlainTextFieldStyle())
-//                }
-//
-//                HStack {
-//                    Text("Set Type")
-//                        .frame(width: 64, alignment: alignment)
-//                        .foregroundColor(.secondary)
-//                    TextField("", text: $item.extra["type"] ?? "").textFieldStyle(PlainTextFieldStyle())
-//                }
-//
-//                HStack {
-//                    Text("URL")
-//                        .frame(width: 64, alignment: alignment)
-//                        .foregroundColor(.secondary)
-//                    TextField("", text: $item.extra["url"] ?? "").textFieldStyle(PlainTextFieldStyle())
-//                }.existWhen(item.extra["type"] == "http")
-//
-//                HStack {
-//                    Text("Path")
-//                        .frame(width: 64, alignment: alignment)
-//                        .foregroundColor(.secondary)
-//                    TextField("", text: $item.extra["path"] ?? "").textFieldStyle(PlainTextFieldStyle())
-//                }
-//            }.existWhen(item.type == "RULE-SET")
-
         }
     }
 }

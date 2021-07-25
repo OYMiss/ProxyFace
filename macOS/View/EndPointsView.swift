@@ -42,7 +42,6 @@ struct EndPointRowView: View {
                       secondaryButton: .default(Text("OK")))
             }
             Image(systemName: "info.circle").font(.title3).foregroundColor(isSelected ? .white : .blue)
-//                .visiableWhen(item.showingPopoverButton)
                 .onTapGesture {
                     oldEndpointName = item.name
                     item.showingPopover = true
@@ -92,9 +91,6 @@ struct EndPointRowView: View {
                         }
                 }
         }
-//        .onHover { isHovered in
-//            item.showingPopoverButton = isHovered
-//        }
     }
 }
 

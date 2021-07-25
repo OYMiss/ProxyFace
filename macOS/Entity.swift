@@ -44,7 +44,6 @@ class ProxyItem: Identifiable, Hashable {
     var port: String = "532"
     var password: String = "huaweibest"
     
-//    var cipher: String = "aes-128-gcm"
     var extra: [String: Any] = [:]
 
     var status: String

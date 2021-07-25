@@ -43,11 +43,6 @@ class FavoriteListViewModel: ObservableObject {
     static let shared = FavoriteListViewModel()
     
     private init() {
-//        let endPointListViewModel = EndPointListViewModel.shared
-//        let ruleListViewModel = RuleListViewModel.shared
-
-//        endpointViewItems = [endPointListViewModel.items[0], endPointListViewModel.items[1]]
-//        ruleViewItems = [ruleListViewModel.items[1], ruleListViewModel.items[3]]
         endpointViewItems = []
         ruleViewItems = []
     }

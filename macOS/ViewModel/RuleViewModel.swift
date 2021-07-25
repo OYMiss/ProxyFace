@@ -44,14 +44,6 @@ class RuleViewModel: Identifiable, Hashable, ObservableObject {
     
 }
 
-func toRuleViewModel(items: [RuleItem]) -> [RuleViewModel] {
-    var viewModels: [RuleViewModel] = []
-    for item in items {
-        viewModels.append(RuleViewModel(item))
-    }
-    return viewModels
-}
-
 class RuleListViewModel: ObservableObject {
 
     @Published var items: [RuleViewModel]

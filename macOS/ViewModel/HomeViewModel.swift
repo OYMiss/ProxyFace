@@ -8,10 +8,6 @@
 import Foundation
 import Combine
 
-struct ClashStatus: Codable {
-    var hello: String
-}
-
 class HomeViewModel: Identifiable, Hashable, ObservableObject {
     var cancellable: AnyCancellable?
     @Published var clashStatus = "Checking"

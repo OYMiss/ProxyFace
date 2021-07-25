@@ -129,7 +129,6 @@ extension String {
 
 func loadClashConfig() {
     do {
-//        let configManager = ConfigManager.config
         let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: ConfigManager.config.clashLaunchAgentUrl.path) {
             ConfigClash()

@@ -53,14 +53,6 @@ class ProxyViewModel : Identifiable, Hashable, ObservableObject {
     }
 }
 
-func toProxyViewModel(items: [ProxyItem]) -> [ProxyViewModel] {
-    var viewModels: [ProxyViewModel] = []
-    for item in items {
-        viewModels.append(ProxyViewModel(item))
-    }
-    return viewModels
-}
-
 class ProxyListViewModel: ObservableObject {
     @Published var items: [ProxyViewModel]
     

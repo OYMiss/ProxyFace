@@ -17,7 +17,7 @@ struct HomeView: View {
     
     private func delayFetchStatus() {
         homeViewModel.clashStatus = "Checking"
-        // Delay of 2.5 seconds
+        // Delay of 0.5 seconds
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             homeViewModel.fetchClashStatus()
         }
@@ -48,11 +48,6 @@ struct HomeView: View {
             ForEach(Array(listViewModel.endpointViewItems), id: \.self) { item in
                 EndPointRowView(item: item, isSelected: selectedItems.contains(item))
             }
-//            Label("Favorite", systemImage: "list.bullet").font(.title3)
-//
-//            ForEach(listViewModel.ruleViewItems, id: \.id) { item in
-//                RuleRowView(item: item, isSelected: false)
-//            }
             Divider()
             HStack {
                 Label("Preview", systemImage: "waveform.path.ecg").font(.title3)

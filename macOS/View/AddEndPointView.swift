@@ -22,7 +22,6 @@ struct AddEndPointView: View {
                     ) {
                         EndPointDetailView(item: newEndPointViewModel, nodeListViewModel: NodeListViewModel.shared, listWidth: 288)
                             .padding(.leading, 16)
-//                            .padding(.trailing, 16)
                             .padding(.bottom, 8)
                             .padding(.top, 4)
                             .frame(width: 320, height: 140)
